@@ -18,10 +18,10 @@ export const pool = new Pool({
 export async function testDBConnection() {
     try {
         const result = await pool.query('SELECT NOW()');
-        console.log('✅ Connected to database');
+        console.log('Connected to database');
         console.log('Database time:', result.rows[0]);
     } catch (error) {
-        console.error('❌ Database connection failed');
+        console.error('Database connection failed');
         console.error(error);
     }
 }
