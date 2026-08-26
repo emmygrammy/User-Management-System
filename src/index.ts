@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import { pool, testDBConnection } from './config/db.js';
+import { authRouter } from './routes/auth_route.js';
 
 
 dotenv.config();
@@ -14,6 +15,10 @@ app.use(cors());
 app.get('/', (req, res) => {
     res.send('User Management system running');
 });
+
+// Auth routes
+app.use('/api/auth', authRouter);
+
 
 // Test database connection
 testDBConnection();
