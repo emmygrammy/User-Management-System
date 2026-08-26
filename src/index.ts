@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import { pool, testDBConnection } from './config/db.js';
 import { authRouter } from './routes/auth_route.js';
+import { contactRouter } from './routes/contact_route.js';
+import { userRouter } from './routes/user_route.js';
 
 
 dotenv.config();
@@ -18,6 +20,14 @@ app.get('/', (req, res) => {
 
 // Auth routes
 app.use('/api/auth', authRouter);
+
+// User routes
+app.use('/api/users', userRouter);
+
+app.use('/api/users', contactRouter);
+// Contact routes
+app.use('/api/contacts', contactRouter);
+
 
 
 // Test database connection
