@@ -1,12 +1,10 @@
 import express from 'express';
-import { createContact, getContact, updateContact, deleteContact } from '../controllers/contact_controller.js';
+import { createContact, getContact, updateContact, deleteContact } from '../controllers/contact.controller.js';
 
 export const contactRouter = express.Router();
 
-contactRouter.post('/:userId/contacts', createContact);
-contactRouter.get('/:userId/contacts', getContact);
+contactRouter.post('/users/:userId/contacts', createContact);
+contactRouter.get('/users/:userId/contacts', getContact);
 
-
-contactRouter.patch('/:id', updateContact);
-contactRouter.delete('/:id', deleteContact);
-
+contactRouter.patch('/contacts/:id', updateContact);
+contactRouter.delete('/contacts/:id', deleteContact);

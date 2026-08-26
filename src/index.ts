@@ -24,9 +24,8 @@ app.use('/api/auth', authRouter);
 // User routes
 app.use('/api/users', userRouter);
 
-app.use('/api/users', contactRouter);
 // Contact routes
-app.use('/api/contacts', contactRouter);
+app.use('/api', contactRouter);
 
 
 
