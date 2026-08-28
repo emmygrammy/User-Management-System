@@ -4,8 +4,8 @@ import bcrypt from 'bcryptjs';
 
 export  async function registerUser(
     surname: string,
-    lastname: string,
-    middlename:string|null,
+    last_name: string,
+    middle_name:string|null,
     email:string,
     password: string
 ){
@@ -20,8 +20,8 @@ export  async function registerUser(
   // create user
     const user = await createUser(
         surname, 
-        lastname, 
-        middlename, 
+        last_name, 
+        middle_name, 
         email, 
         passwordHash);
 

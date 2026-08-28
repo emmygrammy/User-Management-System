@@ -6,12 +6,12 @@ import { registerUser as registerUserService } from '../services/auth.services.j
 export  async function registerUser (req: Request, res: Response)  {
     try{
          //logic  to register
-         const { surname, lastname, middlename, email, password } = req.body;
+         const { surname, last_name, middle_name, email, password } = req.body;
         
          const user = await registerUserService(
             surname, 
-            lastname, 
-            middlename, 
+            last_name, 
+            middle_name, 
             email, 
             password);
         
