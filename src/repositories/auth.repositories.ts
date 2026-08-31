@@ -24,3 +24,22 @@ const result = await pool.query(
 )
 return result.rows[0]
 }
+
+// create otp
+
+export async function createOtp(
+     user_Id: string,
+    code_hash: string,
+    expires_at: Date
+){
+   const result = await pool.query(
+    `INSERT INTO otps
+    (user_id, code_hash, expires_at, attempts)
+    VALUES($1,$2,$3,$4)
+    RETURNING id, user_id, code_hash, expires_at`,
+    [user_Id, code_hash, expires_at,0]
+   )
+
+   return result.rows[0]
+
+}

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { registerUser as registerUserService } from '../services/auth.services.js';
+import { registerUser as registerUserService, loginUser as loginUserService } from '../services/auth.services.js';
 
 
 
@@ -36,12 +36,29 @@ export  async function registerUser (req: Request, res: Response)  {
 }
 
 export async function loginUser (req: Request, res: Response) {
-     try{
+     try{ 
+         const { 
+            email, 
+            password 
+        } = req.body;
 
-        res.status(200).json({message:'user logged in successfully'})
+         const result = await loginUserService(
+            email, 
+            password);
+
+        res.status(200).json(result)
 
      }catch(error){
         console.log(error)
+         if (
+            error instanceof Error &&
+            error.message === 'Invalid email or password'
+        ) {
+            res.status(401).json({
+                message: error.message
+            });
+            return;
+        }
 
         res.status(500).json({
             message:'internal server error'
