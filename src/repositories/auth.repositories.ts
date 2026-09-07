@@ -26,7 +26,6 @@ return result.rows[0]
 }
 
 // create otp
-
 export async function createOtp(
      user_Id: string,
     code_hash: string,
@@ -42,4 +41,30 @@ export async function createOtp(
 
    return result.rows[0]
 
+}
+
+
+export async function findLatestOTP(userId: string) {
+    const result = await pool.query(
+        `SELECT *
+         FROM otps
+         WHERE user_id = $1
+         ORDER BY created_at DESC
+         LIMIT 1`,
+        [userId]
+    );
+
+    return result.rows[0];
+}
+
+export async function markOTPAsVerified(otpId: string) {
+    const result = await pool.query(
+        `UPDATE otps
+         SET verified_at = NOW()
+         WHERE id = $1
+         RETURNING id, user_id, verified_at`,
+        [otpId]
+    );
+
+    return result.rows[0];
 }

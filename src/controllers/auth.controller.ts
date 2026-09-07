@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
-import { registerUser as registerUserService, loginUser as loginUserService } from '../services/auth.services.js';
+import { 
+    registerUser as registerUserService, 
+    loginUser as loginUserService, 
+    verifyOTP as verifyOTPService } from '../services/auth.services.js';
 
 
 
@@ -68,11 +71,41 @@ export async function loginUser (req: Request, res: Response) {
 
  export async function verifyOTP(req: Request, res: Response) {
     try{
+
+        const { 
+            email, 
+            otp 
+        } = req.body;
+
+        const result  = await verifyOTPService(email, otp);
         res.status(200).json({
             message:'otp verified successfully'
         })
+
     }catch(error){
         console.log(error)
+
+           if (error instanceof Error) {
+            if (error.message === 'User not found') {
+                res.status(404).json({
+                    message: error.message
+                });
+                return;
+            }
+
+            if (
+                error.message === 'OTP not found' ||
+                error.message === 'Invalid OTP' ||
+                error.message === 'OTP has expired' ||
+                error.message === 'OTP already verified'
+            ) {
+                res.status(401).json({
+                    message: error.message
+                });
+                return;
+            }
+        }
+
         res.status(500).json({
             message:'internal server error'
         })
