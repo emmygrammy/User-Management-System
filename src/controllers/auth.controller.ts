@@ -78,9 +78,7 @@ export async function loginUser (req: Request, res: Response) {
         } = req.body;
 
         const result  = await verifyOTPService(email, otp);
-        res.status(200).json({
-            message:'otp verified successfully'
-        })
+        res.status(200).json(result)
 
     }catch(error){
         console.log(error)

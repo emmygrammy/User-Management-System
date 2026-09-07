@@ -1,5 +1,6 @@
 import { findUserByEmail, createUser , createOtp, findLatestOTP, markOTPAsVerified} from '../repositories/auth.repositories.js';
 import bcrypt from 'bcryptjs';
+import { generateToken } from '../utils/jwt.js';
 
 
 // Register user
@@ -117,7 +118,17 @@ export async function loginUser(
     // Mark OTP as verified
     await markOTPAsVerified(otpRecord.id);
 
+    //generate token
+    const token = generateToken(
+        user.id, 
+        user.email
+
+    );
+
     return {
-        message: 'OTP verified successfully'
+        message: 'OTP verified successfully',
+        token,
+
+        
     };
 }
